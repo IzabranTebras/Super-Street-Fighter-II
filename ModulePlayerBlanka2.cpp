@@ -886,6 +886,7 @@ update_status ModulePlayerBlanka2::Update()
 
 		switch (typeAnim){
 		case LOOP:
+			
 			jumpDirection = 0;
 			block = false;
 			if ((App->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN) || (App->input->GetKey(SDL_CONTROLLER_AXIS_RIGHTY) == KEY_DOWN)){
@@ -1239,8 +1240,10 @@ update_status ModulePlayerBlanka2::Update()
 					position.y = position.y - 4;
 				}
 				else{
-					endJump = true;
-					position.y = position.y + 4;
+					if (position.y < 115){
+						endJump = true;
+						position.y = position.y + 4;
+					}
 				}
 
 				// control jump (left and right)
@@ -1260,6 +1263,7 @@ update_status ModulePlayerBlanka2::Update()
 					endJump = false;
 				}
 			}
+
 
 			//render the jump and shadow
 			texture = move->GetCurrentFrame(loopAnim, body, arm, leg);

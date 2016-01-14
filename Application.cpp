@@ -29,8 +29,8 @@ Application::Application()
 	modules.push_back(scene_sagat = new ModuleSceneSagat(false));
 	modules.push_back(player = new ModulePlayerBlanka1(false));
 	modules.push_back(player2 = new ModulePlayerBlanka2(false));
-	modules.push_back(fade = new ModuleFadeToBlack());
 	modules.push_back(gui = new ModuleGUI(false));
+	modules.push_back(fade = new ModuleFadeToBlack());
 
 	//Render
 	modules.push_back(renderer = new ModuleRender());

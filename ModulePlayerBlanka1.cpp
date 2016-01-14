@@ -885,6 +885,7 @@ update_status ModulePlayerBlanka1::Update()
 		case LOOP:
 			jumpDirection = 0;
 			block = false;
+			
 			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN){
 				damage = NONE;
 				punchAttacks = 0;

@@ -55,6 +55,7 @@ bool ModuleSceneSagat::Start()
 	App->player->Enable();
 	App->player2->Enable();
 	App->gui->Enable();
+	App->collision->Enable();
 
 	// Trigger background music
 	App->audio->PlayMusic("Sagat.wav");
@@ -67,6 +68,7 @@ bool ModuleSceneSagat::CleanUp()
 	LOG("Unloading Sagat scene");
 
 	App->textures->Unload(graphics);
+	App->collision->Disable();
 	App->player->Disable();
 	App->player2->Disable();
 	App->gui->Disable();
