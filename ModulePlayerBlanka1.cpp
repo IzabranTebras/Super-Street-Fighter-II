@@ -89,7 +89,7 @@ ModulePlayerBlanka1::ModulePlayerBlanka1(bool start_enabled) : Module(start_enab
 	jump.bodyColliderFrame.push_back({ 40, 10, 30, 95 });
 	jump.armColliderFrame.push_back({ 70, 15, 10, 50 });
 	jump.legColliderFrame.push_back({ 50, 70, 20, 20 });
-	jump.speed = 0.03f;
+	jump.speed = 0.05f;
 	jump.jumpAnim = true;
 	
 	// Low Punch animation
