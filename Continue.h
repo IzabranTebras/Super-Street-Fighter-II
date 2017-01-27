@@ -23,6 +23,9 @@ public:
 	SDL_Rect aux1;
 	SDL_Rect continua;
 	SDL_Texture* graphics = nullptr;
+
+private:
+	bool pressButton = false;
 };
 #endif
 

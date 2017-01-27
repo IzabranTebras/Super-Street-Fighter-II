@@ -81,6 +81,8 @@ bool ModuleGUI::Start()
 	exit = false;
 	roundStart = false;
 	fightStart = false;
+	roundTime = 4000;
+	fightTime = 3000;
 
 	return true;
 }
@@ -105,7 +107,7 @@ update_status ModuleGUI::Update()
 	App->renderer->Blit(graphic, 45, 32, &player1, SDL_FLIP_NONE, 0.0f);
 	App->renderer->Blit(graphic, 277, 32, &player2, SDL_FLIP_NONE, 0.0f);
 
-	if ((clock() - start) < 4000){
+	if ((clock() - start) < fightTime){
 		App->renderer->Blit(graphic, 150, 80, &round, SDL_FLIP_NONE, 0.0f);
 		App->renderer->Blit(graphic, 135, 125, &battle1, SDL_FLIP_NONE, 0.0f);
 		if (roundStart == false){
@@ -114,7 +116,7 @@ update_status ModuleGUI::Update()
 		}
 	}
 	else{
-		if ((clock() - start) < 5000){
+		if ((clock() - start) < roundTime){
 			App->renderer->Blit(graphic, 155, 80, &fight, SDL_FLIP_NONE, 0.0f);
 			App->renderer->Blit(graphic, 135, 125, &battle1, SDL_FLIP_NONE, 0.0f);
 			if (fightStart == false){

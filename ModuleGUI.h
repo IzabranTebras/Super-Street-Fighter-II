@@ -45,5 +45,7 @@ private:
 	int life2;
 	SDL_Rect endTime1;
 	SDL_Rect endTime2;
+	clock_t roundTime;
+	clock_t fightTime;
 };
 #endif

@@ -39,6 +39,7 @@ bool Continue::Start()
 	App->audio->PlayMusic("Continue.wav");
 	graphics = App->textures->Load("GUI2.png");
 	time1.current_frame = 0;
+	pressButton = false;
 	return true;
 }
 
@@ -46,16 +47,22 @@ update_status Continue::Update(){
 	bool loop = false;
 	SDL_Rect col;
 
-	aux1 = time1.GetCurrentFrame(loop, col, col, col);
-	if (aux1.x != 174){
+	if (!pressButton) 
+	{
+		aux1 = time1.GetCurrentFrame(loop, col, col, col);
+	}
+
+	if (aux1.x != 174) {
 		App->renderer->Blit(graphics, 150, 100, &continua, SDL_FLIP_NONE, 0.0f);
 		App->renderer->Blit(graphics, 150, 150, &aux1, SDL_FLIP_NONE, 0.0f);
 	}
-	else{
+	else {
 		return UPDATE_STOP;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN){
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		pressButton = true;
 		App->fade->FadeToBlack(App->scene_sagat, this, 3.0f);
 	}
 	return UPDATE_CONTINUE;

@@ -870,7 +870,7 @@ update_status ModulePlayerBlanka1::Update()
 	Start - Pause
 	Select - Unused
 	*/
-	if (clock() - time < 6000){
+	if (clock() - time < 4000){
 		texture = idle.GetCurrentFrame(loopAnim, body, arm, leg);
 		if (position.x < App->player2->position.x){
 			flip = SDL_FLIP_NONE;

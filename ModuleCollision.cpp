@@ -42,7 +42,7 @@ update_status ModuleCollision::Update()
 	const Collider* c1;
 	const Collider* c2;
 
-	for (list<Collider*>::iterator it = colliders.begin(); it != colliders.end();)
+	for (list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it)
 	{
 		c1 = *it;
 
@@ -70,7 +70,7 @@ update_status ModuleCollision::PostUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_DOWN)
 		debug = !debug;
 
-	if (debug == true)
+	if (debug)
 	{
 		for (list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it)
 		{
@@ -123,15 +123,18 @@ Collider* ModuleCollision::AddCollider(const SDL_Rect rect, const COLLIDER_TYPE 
 
 bool Collider::CheckCollision(const SDL_Rect r) const
 {
-	if (flip == true){
+	if (flip)
+	{
 		return (r.x < rect.x &&
 			r.x + r.w > rect.x + rect.w &&
 			rect.y < r.y + r.h &&
 			rect.h + rect.y > r.y);
 	}
-
-	return (r.x > rect.x &&
-		r.x + r.w < rect.x + rect.w &&
-		rect.y < r.y + r.h &&
-		rect.h + rect.y > r.y);
+	else 
+	{
+		return (r.x > rect.x &&
+			r.x + r.w < rect.x + rect.w &&
+			rect.y < r.y + r.h &&
+			rect.h + rect.y > r.y);
+	}
 }
