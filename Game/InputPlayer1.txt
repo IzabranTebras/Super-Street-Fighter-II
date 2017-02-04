@@ -1,0 +1,15 @@
+Up -> 26
+Down -> 22
+Left -> 4
+Right -> 7
+LowPunch -> 14
+MediumPunch -> 12
+HighPunch -> 24
+LowKick -> 15
+MediumKick -> 18
+HighKick -> 19
+END
+
+
+
+View SDL_scancode.h

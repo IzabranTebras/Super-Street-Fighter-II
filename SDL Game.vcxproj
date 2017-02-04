@@ -80,8 +80,7 @@
     <ClInclude Include="ModuleFadeToBlack.h" />
     <ClInclude Include="ModuleGUI.h" />
     <ClInclude Include="ModuleInput.h" />
-    <ClInclude Include="ModulePlayerBlanka1.h" />
-    <ClInclude Include="ModulePlayerBlanka2.h" />
+    <ClInclude Include="ModulePlayer.h" />
     <ClInclude Include="ModuleRender.h" />
     <ClInclude Include="ModuleSceneSagat.h" />
     <ClInclude Include="ModuleTextures.h" />
@@ -98,8 +97,7 @@
     <ClCompile Include="ModuleFadeToBlack.cpp" />
     <ClCompile Include="ModuleGUI.cpp" />
     <ClCompile Include="ModuleInput.cpp" />
-    <ClCompile Include="ModulePlayerBlanka1.cpp" />
-    <ClCompile Include="ModulePlayerBlanka2.cpp" />
+    <ClCompile Include="ModulePlayer.cpp" />
     <ClCompile Include="ModuleRender.cpp" />
     <ClCompile Include="ModuleSceneSagat.cpp" />
     <ClCompile Include="ModuleTextures.cpp" />

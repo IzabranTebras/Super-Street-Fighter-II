@@ -55,16 +55,13 @@
     <ClInclude Include="ModuleSceneSagat.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
-    <ClInclude Include="ModulePlayerBlanka1.h">
-      <Filter>Game Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="ModulePlayerBlanka2.h">
-      <Filter>Game Modules</Filter>
-    </ClInclude>
     <ClInclude Include="ModuleGUI.h">
       <Filter>Core Modules</Filter>
     </ClInclude>
     <ClInclude Include="Continue.h">
+      <Filter>Game Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="ModulePlayer.h">
       <Filter>Game Modules</Filter>
     </ClInclude>
   </ItemGroup>
@@ -102,16 +99,13 @@
     <ClCompile Include="ModuleSceneSagat.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
-    <ClCompile Include="ModulePlayerBlanka1.cpp">
-      <Filter>Game Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="ModulePlayerBlanka2.cpp">
-      <Filter>Game Modules</Filter>
-    </ClCompile>
     <ClCompile Include="ModuleGUI.cpp">
       <Filter>Core Modules</Filter>
     </ClCompile>
     <ClCompile Include="Continue.cpp">
+      <Filter>Game Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="ModulePlayer.cpp">
       <Filter>Game Modules</Filter>
     </ClCompile>
   </ItemGroup>

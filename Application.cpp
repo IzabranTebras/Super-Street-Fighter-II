@@ -6,8 +6,7 @@
 #include "ModuleAudio.h"
 #include "ModuleFadeToBlack.h"
 #include "ModuleSceneSagat.h"
-#include "ModulePlayerBlanka1.h"
-#include "ModulePlayerBlanka2.h"
+#include "ModulePlayer.h"
 #include "ModuleCollision.h"
 #include "ModuleGUI.h"
 #include "Continue.h"
@@ -27,8 +26,8 @@ Application::Application()
 
 	// Game Modules
 	modules.push_back(scene_sagat = new ModuleSceneSagat(false));
-	modules.push_back(player = new ModulePlayerBlanka1(false));
-	modules.push_back(player2 = new ModulePlayerBlanka2(false));
+	modules.push_back(player = new ModulePlayer(1, false));
+	modules.push_back(player2 = new ModulePlayer(2, false));
 	modules.push_back(gui = new ModuleGUI(false));
 	modules.push_back(fade = new ModuleFadeToBlack());
 
