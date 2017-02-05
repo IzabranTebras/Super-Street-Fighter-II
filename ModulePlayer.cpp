@@ -199,7 +199,7 @@ ModulePlayer::ModulePlayer(int player, bool start_enabled) : Module(start_enable
 	LPunch.bodyColliderFrame.push_back({ 60, 30, 25, 75 });
 	LPunch.armColliderFrame.push_back({ 70, 40, 15, 20 });
 	LPunch.legColliderFrame.push_back({ 70, 70, 20, 35 });
-	LPunch.speed = 0.4f;
+	LPunch.speed = 0.1f;
 
 	// Medium Punch Animation
 	MPunch.frames.push_back({ 417, 136, 94, 108 });

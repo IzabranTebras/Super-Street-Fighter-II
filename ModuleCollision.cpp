@@ -42,7 +42,7 @@ update_status ModuleCollision::Update()
 	const Collider* c1;
 	const Collider* c2;
 
-	for (list<Collider*>::iterator it = colliders.begin(); it != colliders.end(); ++it)
+	for (list<Collider*>::iterator it = colliders.begin(); it != colliders.end();)
 	{
 		c1 = *it;
 
@@ -50,12 +50,12 @@ update_status ModuleCollision::Update()
 		{
 			c2 = *it2;
 
-			if (c1->CheckCollision(c2->rect) == true)
+			if (matrix[c1->type][c2->type] && c1->CheckCollision(c2->rect))
 			{
-				if (matrix[c1->type][c2->type] && c1->callback)
+				if (c1->callback)
 					c1->callback->OnCollision(c1, c2);
 
-				if (matrix[c2->type][c1->type] && c2->callback)
+				if (c2->callback)
 					c2->callback->OnCollision(c2, c1);
 			}
 		}

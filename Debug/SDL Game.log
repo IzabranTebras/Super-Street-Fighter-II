@@ -1,49 +1,5 @@
-﻿Compilación iniciada a las 04/02/2017 1:06:46.
-     1>Proyecto "C:\Users\Cristian\Documents\GitHub\Super-Street-Fighter-II\SDL Game.vcxproj" en el nodo 2 (Build destinos).
-     1>ClCompile:
-         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Application.cpp Continue.cpp Main.cpp ModuleAudio.cpp ModuleCollision.cpp ModuleFadeToBlack.cpp ModuleGUI.cpp ModuleInput.cpp ModulePlayer.cpp ModuleRender.cpp ModuleSceneSagat.cpp ModuleTextures.cpp ModuleWindow.cpp
-         ModuleSceneSagat.cpp
-     1>c:\users\cristian\documents\github\super-street-fighter-ii\animation.h(33): warning C4244: '=' : conversión de 'unsigned int' a 'float'; posible pérdida de datos
-         ModulePlayer.cpp
-     1>c:\users\cristian\documents\github\super-street-fighter-ii\animation.h(33): warning C4244: '=' : conversión de 'unsigned int' a 'float'; posible pérdida de datos
-     1>c:\users\cristian\documents\github\super-street-fighter-ii\moduleplayer.cpp(10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
-     1>c:\users\cristian\documents\github\super-street-fighter-ii\moduleplayer.cpp(11): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
-         ModuleGUI.cpp
-     1>c:\users\cristian\documents\github\super-street-fighter-ii\animation.h(33): warning C4244: '=' : conversión de 'unsigned int' a 'float'; posible pérdida de datos
-         Application.cpp
-     1>c:\users\cristian\documents\github\super-street-fighter-ii\animation.h(33): warning C4244: '=' : conversión de 'unsigned int' a 'float'; posible pérdida de datos
-         Generando código...
-         Compilando...
-         ModuleWindow.cpp
-         ModuleTextures.cpp
-         ModuleRender.cpp
-         ModuleInput.cpp
-         ModuleFadeToBlack.cpp
-         ModuleCollision.cpp
-         ModuleAudio.cpp
-         Main.cpp
-         Continue.cpp
-     1>c:\users\cristian\documents\github\super-street-fighter-ii\animation.h(33): warning C4244: '=' : conversión de 'unsigned int' a 'float'; posible pérdida de datos
-         Generando código...
-       Link:
-         C:\Program Files\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Cristian\Documents\GitHub\Super-Street-Fighter-II\Debug\Super Street Fighter II.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Cristian\Documents\GitHub\Super-Street-Fighter-II\Debug\Super Street Fighter II.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Cristian\Documents\GitHub\Super-Street-Fighter-II\Debug\Super Street Fighter II.lib" /MACHINE:X86 Debug\Application.obj
-         Debug\Continue.obj
-         Debug\Log.obj
-         Debug\Main.obj
-         Debug\ModuleAudio.obj
-         Debug\ModuleCollision.obj
-         Debug\ModuleFadeToBlack.obj
-         Debug\ModuleGUI.obj
-         Debug\ModuleInput.obj
-         Debug\ModulePlayer.obj
-         Debug\ModuleRender.obj
-         Debug\ModuleSceneSagat.obj
-         Debug\ModuleTextures.obj
-         Debug\ModuleWindow.obj
-     1>MSVCRTD.lib(cinitexe.obj) : warning LNK4098: la biblioteca predeterminada'msvcrt.lib' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
-         SDL Game.vcxproj -> C:\Users\Cristian\Documents\GitHub\Super-Street-Fighter-II\Debug\Super Street Fighter II.exe
-     1>Compilación del proyecto terminada "C:\Users\Cristian\Documents\GitHub\Super-Street-Fighter-II\SDL Game.vcxproj" (Build destinos).
-
-Compilación correcta.
-
-Tiempo transcurrido 00:00:09.37
+﻿  ModulePlayer.cpp
+c:\users\cristian\documents\github\super-street-fighter-ii\animation.h(33): warning C4244: '=' : conversión de 'unsigned int' a 'float'; posible pérdida de datos
+c:\users\cristian\documents\github\super-street-fighter-ii\moduleplayer.cpp(10): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
+c:\users\cristian\documents\github\super-street-fighter-ii\moduleplayer.cpp(11): warning C4067: símbolos (token) inesperados después de la directiva del preprocesador; se esperaba una nueva línea
+  SDL Game.vcxproj -> C:\Users\Cristian\Documents\GitHub\Super-Street-Fighter-II\Debug\Super Street Fighter II.exe

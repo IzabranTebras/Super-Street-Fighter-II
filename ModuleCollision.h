@@ -37,16 +37,16 @@ struct Collider
 	void SetCollider(const SDL_Rect &colliderRect, const int x, const int y, const bool fliped = false)
 	{
 		flip = fliped;
-		if (flip == false){
+		if (!flip){
 			rect.x = colliderRect.x + x;
 			rect.y = colliderRect.y + y;
 			rect.w = colliderRect.w;
 			rect.h = colliderRect.h;
 		}
 		else{
-			rect.x = x - colliderRect.x;
+			rect.x = colliderRect.x;
 			rect.y = colliderRect.y + y;
-			rect.w = -colliderRect.w;
+			rect.w = colliderRect.w - x;
 			rect.h = colliderRect.h;
 		}
 	}
