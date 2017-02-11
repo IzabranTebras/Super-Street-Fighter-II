@@ -44,9 +44,9 @@ struct Collider
 			rect.h = colliderRect.h;
 		}
 		else{
-			rect.x = colliderRect.x;
+			rect.x = x - colliderRect.x;
 			rect.y = colliderRect.y + y;
-			rect.w = colliderRect.w - x;
+			rect.w = -colliderRect.w;
 			rect.h = colliderRect.h;
 		}
 	}
