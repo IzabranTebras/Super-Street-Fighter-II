@@ -941,7 +941,7 @@ update_status ModulePlayer::Update()
 		else
 		{
 			flip = SDL_FLIP_HORIZONTAL;
-			App->renderer->Blit(graphics, position.x+4, position.y, &texture, flip);
+			App->renderer->Blit(graphics, position.x, position.y, &texture, flip);
 		}
 	}else{
 		switch (typeAnim){
@@ -1370,7 +1370,7 @@ update_status ModulePlayer::Update()
 			}
 			else{
 				flip = SDL_FLIP_HORIZONTAL;
-				App->renderer->Blit(graphics, position.x - texture.w + 75, position.y, &texture, flip);
+				App->renderer->Blit(graphics, position.x - texture.w + 71, position.y, &texture, flip);
 			}
 		}
 
