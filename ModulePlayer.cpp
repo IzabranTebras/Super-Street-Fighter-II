@@ -1304,11 +1304,15 @@ update_status ModulePlayer::Update()
 			if (jumpMove.x != 646){
 				// control jump (up and down)
 				if ((position.y > 10) && (endJump == false)){
-					position.y = position.y - 4;
+					position.y -= 4;
 				}
 				else{
 					endJump = true;
-					position.y = position.y + 4;
+					position.y += 4;
+				}
+
+				if (position.y > 110) {
+					printf("hola");
 				}
 
 				// control jump (left and right)
@@ -1318,15 +1322,15 @@ update_status ModulePlayer::Update()
 			}
 
 			// control the render according to animations
-			if (loopAnim == true){
-				if (position.y <= 110){
-					move = &jump;
-				}
-				else{
-					typeAnim = LOOP;
-					jumpAttack = false;
-					endJump = false;
-				}
+			if (position.y <= 110 && loopAnim){
+				move = &jump;
+			}
+			else if (position.y > 110){
+				position.y = 110;
+				typeAnim = LOOP;
+				jumpAttack = false;
+				endJump = false;
+				move = &idle;
 			}
 
 			//render the jump and shadow
