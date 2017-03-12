@@ -932,19 +932,22 @@ update_status ModulePlayer::Update()
 	Start - Pause
 	Select - Unused
 	*/
-	if (clock() - time < 4000){
+	if (clock() - time < 4000)
+	{
 		texture = idle.GetCurrentFrame(loopAnim, body, arm, leg);
 		if (position.x < enemy->position.x){
 			flip = SDL_FLIP_NONE;
-			App->renderer->Blit(graphics, position.x, position.y, &texture, flip);
 		}
 		else
 		{
 			flip = SDL_FLIP_HORIZONTAL;
-			App->renderer->Blit(graphics, position.x, position.y, &texture, flip);
 		}
-	}else{
-		switch (typeAnim){
+		App->renderer->Blit(graphics, position.x, position.y, &texture, flip);
+	}
+	else
+	{
+		switch (typeAnim)
+		{
 		case LOOP:
 			jumpDirection = 0;
 			block = false;
@@ -1311,21 +1314,19 @@ update_status ModulePlayer::Update()
 					position.y += 4;
 				}
 
-				if (position.y > 110) {
-					printf("hola");
-				}
-
 				// control jump (left and right)
 				if ((jumpDirection != 0) && ((position.x + 1 < 480) && (position.x - 1 > 65)) && (abs((position.x - enemy->position.x - 40)*SCREEN_SIZE) < App->renderer->camera.w) && (abs((position.x - enemy->position.x + 50)*SCREEN_SIZE) < App->renderer->camera.w)) {
 					position.x = position.x + jumpDirection;
 				}
 			}
 
-			// control the render according to animations
-			if (position.y <= 110 && loopAnim){
+			// control the jump render according to animations
+			if (position.y <= 110 && loopAnim)
+			{
 				move = &jump;
 			}
-			else if (position.y > 110){
+			else if (position.y > 110)
+			{
 				position.y = 110;
 				typeAnim = LOOP;
 				jumpAttack = false;
@@ -1365,7 +1366,8 @@ update_status ModulePlayer::Update()
 		}
 
 		//render if is not a jump because the jump has a special animation
-		if ((typeAnim != JUMPING) && (move != &KO)){
+		if ((typeAnim != JUMPING) && (move != &KO))
+		{
 			texture = move->GetCurrentFrame(loopAnim, body, arm, leg);
 
 			if (position.x < enemy->position.x){
@@ -1378,25 +1380,39 @@ update_status ModulePlayer::Update()
 			}
 		}
 
-		if ((App->renderer->camera.x) < -(position.x*SCREEN_SIZE)){
+		if ((App->renderer->camera.x) < -(position.x*SCREEN_SIZE))
+		{
 			++App->renderer->camera.x;
 		}
-		else{
-			if ((App->renderer->camera.x - App->renderer->camera.w) >  -((position.x + 50)*SCREEN_SIZE)){
+		else
+		{
+			if ((App->renderer->camera.x - App->renderer->camera.w) >  -((position.x + 50)*SCREEN_SIZE))
+			{
 				--App->renderer->camera.x;
 			}
 		}
 
 		//Update of colliders depending if the texture is flip or not
-		if (flip == SDL_FLIP_NONE){
+		if (flip == SDL_FLIP_NONE)
+		{
 			bodyCollider->SetCollider(body, position.x - 30, position.y);
 			armCollider->SetCollider(arm, position.x - 30, position.y);
 			legCollider->SetCollider(leg, position.x - 30, position.y);
 		}
-		else{
-			bodyCollider->SetCollider(body, position.x + texture.w + 30, position.y, true);
-			armCollider->SetCollider(arm, position.x + texture.w + 30, position.y, true);
-			legCollider->SetCollider(leg, position.x + texture.w + 30, position.y, true);
+		else
+		{
+			SDL_Rect rectFlipped = body;
+			rectFlipped.x += rectFlipped.w;
+			rectFlipped.w = -rectFlipped.w;
+			bodyCollider->SetCollider(rectFlipped, position.x + 100, position.y, true);
+			rectFlipped = arm;
+			rectFlipped.x += rectFlipped.w;
+			rectFlipped.w = -rectFlipped.w;
+			armCollider->SetCollider(rectFlipped, position.x + 100, position.y, true);
+			rectFlipped = leg;
+			rectFlipped.x += rectFlipped.w;
+			rectFlipped.w = -rectFlipped.w;
+			legCollider->SetCollider(rectFlipped, position.x + 100, position.y, true);
 		}
 	}
 

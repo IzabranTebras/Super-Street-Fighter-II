@@ -125,15 +125,15 @@ bool Collider::CheckCollision(const SDL_Rect r) const
 {
 	if (flip)
 	{
-		return (r.x < rect.x &&
+		return (r.x < rect.x + rect.w &&
 			r.x + r.w > rect.x + rect.w &&
 			rect.y < r.y + r.h &&
 			rect.h + rect.y > r.y);
 	}
 	else 
 	{
-		return (r.x > rect.x &&
-			r.x + r.w < rect.x + rect.w &&
+		return (r.x + r.w > rect.x &&
+			r.x < rect.x + rect.w &&
 			rect.y < r.y + r.h &&
 			rect.h + rect.y > r.y);
 	}
