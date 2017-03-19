@@ -30,7 +30,7 @@ public:
 				current_frame = 0.0f;
 			}
 			else{
-				current_frame = frames.size()-1;
+				current_frame = (float)(frames.size()-1);
 			}
 		}
 

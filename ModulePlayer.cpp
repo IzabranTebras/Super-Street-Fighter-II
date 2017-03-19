@@ -7,12 +7,13 @@
 #include "ModuleTextures.h"
 #include "ModuleAudio.h"
 #include "SDL/include/SDL.h"
-#include <fstream>;
-#include <sstream>;
+#include <fstream>
+#include <sstream>
 
 ModulePlayer::ModulePlayer(int player, bool start_enabled) : Module(start_enabled)
 {
 	numPlayer = player;
+	damage = NONE;
 
 	// Set of inputs to player 1 and player 2 from external txts
 	ifstream file;

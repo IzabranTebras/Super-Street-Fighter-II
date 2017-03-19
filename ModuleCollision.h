@@ -29,6 +29,7 @@ struct Collider
 		rect(rectangle),
 		type(type),
 		callback(callback),
+		flip(false),
 		body(body),
 		arm(arm),
 		leg(leg)
