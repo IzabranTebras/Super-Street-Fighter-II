@@ -77,7 +77,7 @@ ModulePlayer::ModulePlayer(int player, bool start_enabled) : Module(start_enable
 	idle.bodyColliderFrame.push_back({ 50, 30, 30, 75 });
 	idle.armColliderFrame.push_back({ 50, 40, 20, 20 });
 	idle.legColliderFrame.push_back({ 50, 70, 20, 20 });
-	idle.speed = 0.08f;
+	idle.speed = 0.15f;
 
 	// shadow
 	shadow = { 712, 75, 60, 44 };
@@ -103,28 +103,32 @@ ModulePlayer::ModulePlayer(int player, bool start_enabled) : Module(start_enable
 	walk.bodyColliderFrame.push_back({ 50, 45, 30, 65 });
 	walk.armColliderFrame.push_back({ 75, 40, 20, 20 });
 	walk.legColliderFrame.push_back({ 55, 70, 20, 20 });
-	walk.speed = 0.1f;
+	walk.speed = 0.2f;
 
 	// crouch down animation
 	crouchDown.frames.push_back({ 938, 10, 71, 108 });
 	crouchDown.bodyColliderFrame.push_back({ 50, 55, 30, 50 });
 	crouchDown.armColliderFrame.push_back({ 65, 50, 20, 20 });
 	crouchDown.legColliderFrame.push_back({ 55, 70, 20, 20 });
-	crouchDown.speed = 0.03f;
+	crouchDown.speed = 0.05f;
 
 	// crouch up animation
 	crouchUp.frames.push_back({ 1012, 10, 71, 108 });
 	crouchUp.bodyColliderFrame.push_back({ 50, 60, 30, 45 });
 	crouchUp.armColliderFrame.push_back({ 65, 55, 20, 20 });
 	crouchUp.legColliderFrame.push_back({ 55, 70, 20, 20 });
-	crouchUp.speed = 0.05f;
+	crouchUp.speed = 0.08f;
 
 	// jump animation
 	jump.frames.push_back({ 646, 10, 68, 108});
 	jump.bodyColliderFrame.push_back({ 50, 55, 30, 50 });
 	jump.armColliderFrame.push_back({ 65, 50, 20, 20 });
 	jump.legColliderFrame.push_back({ 50, 70, 20, 20 });
-	jump.frames.push_back({ 771, 12, 54, 108});
+	jump.frames.push_back({ 646, 10, 68, 108 });
+	jump.bodyColliderFrame.push_back({ 40, 10, 30, 95 });
+	jump.armColliderFrame.push_back({ 70, 15, 10, 50 });
+	jump.legColliderFrame.push_back({ 50, 70, 20, 20 });
+	jump.frames.push_back({ 771, 12, 54, 108 });
 	jump.bodyColliderFrame.push_back({ 40, 10, 30, 95 });
 	jump.armColliderFrame.push_back({ 70, 15, 10, 50 });
 	jump.legColliderFrame.push_back({ 50, 70, 20, 20 });
@@ -136,7 +140,7 @@ ModulePlayer::ModulePlayer(int player, bool start_enabled) : Module(start_enable
 	jump.bodyColliderFrame.push_back({ 40, 10, 30, 95 });
 	jump.armColliderFrame.push_back({ 70, 15, 10, 50 });
 	jump.legColliderFrame.push_back({ 50, 70, 20, 20 });
-	jump.speed = 0.05f;
+	jump.speed = 0.08f;
 	jump.jumpAnim = true;
 	
 	// Low Punch animation
@@ -200,7 +204,15 @@ ModulePlayer::ModulePlayer(int player, bool start_enabled) : Module(start_enable
 	LPunch.bodyColliderFrame.push_back({ 60, 30, 25, 75 });
 	LPunch.armColliderFrame.push_back({ 70, 40, 15, 20 });
 	LPunch.legColliderFrame.push_back({ 70, 70, 20, 35 });
-	LPunch.speed = 0.1f;
+	LPunch.frames.push_back({ 337, 137, 70, 108 });
+	LPunch.bodyColliderFrame.push_back({ 60, 30, 25, 75 });
+	LPunch.armColliderFrame.push_back({ 70, 40, 15, 20 });
+	LPunch.legColliderFrame.push_back({ 70, 70, 20, 35 });
+	LPunch.frames.push_back({ 337, 137, 70, 108 });
+	LPunch.bodyColliderFrame.push_back({ 60, 30, 25, 75 });
+	LPunch.armColliderFrame.push_back({ 70, 40, 15, 20 });
+	LPunch.legColliderFrame.push_back({ 70, 70, 20, 35 });
+	LPunch.speed = 0.8f;
 
 	// Medium Punch Animation
 	MPunch.frames.push_back({ 417, 136, 94, 108 });
@@ -219,6 +231,22 @@ ModulePlayer::ModulePlayer(int player, bool start_enabled) : Module(start_enable
 	MPunch.bodyColliderFrame.push_back({ 60, 30, 25, 75 });
 	MPunch.armColliderFrame.push_back({ 70, 45, 55, 15 });
 	MPunch.legColliderFrame.push_back({ 70, 70, 20, 35 });
+	MPunch.frames.push_back({ 523, 135, 94, 108 });
+	MPunch.bodyColliderFrame.push_back({ 60, 30, 25, 75 });
+	MPunch.armColliderFrame.push_back({ 70, 45, 55, 15 });
+	MPunch.legColliderFrame.push_back({ 70, 70, 20, 35 });
+	MPunch.frames.push_back({ 523, 135, 94, 108 });
+	MPunch.bodyColliderFrame.push_back({ 60, 30, 25, 75 });
+	MPunch.armColliderFrame.push_back({ 70, 45, 55, 15 });
+	MPunch.legColliderFrame.push_back({ 70, 70, 20, 35 });
+	MPunch.frames.push_back({ 637, 137, 94, 108 });
+	MPunch.bodyColliderFrame.push_back({ 60, 30, 25, 75 });
+	MPunch.armColliderFrame.push_back({ 70, 40, 15, 20 });
+	MPunch.legColliderFrame.push_back({ 70, 70, 20, 35 });
+	MPunch.frames.push_back({ 637, 137, 94, 108 });
+	MPunch.bodyColliderFrame.push_back({ 60, 30, 25, 75 });
+	MPunch.armColliderFrame.push_back({ 70, 40, 15, 20 });
+	MPunch.legColliderFrame.push_back({ 70, 70, 20, 35 });
 	MPunch.frames.push_back({ 637, 137, 94, 108 });
 	MPunch.bodyColliderFrame.push_back({ 60, 30, 25, 75 });
 	MPunch.armColliderFrame.push_back({ 70, 40, 15, 20 });
@@ -231,7 +259,7 @@ ModulePlayer::ModulePlayer(int player, bool start_enabled) : Module(start_enable
 	MPunch.bodyColliderFrame.push_back({ 60, 30, 25, 75 });
 	MPunch.armColliderFrame.push_back({ 70, 40, 15, 20 });
 	MPunch.legColliderFrame.push_back({ 70, 70, 20, 35 });
-	MPunch.speed = 0.3f;
+	MPunch.speed = 0.6f;
 
 	// High Punch Animation
 	HPunch.frames.push_back({ 750, 140, 83, 108 });
@@ -342,7 +370,7 @@ ModulePlayer::ModulePlayer(int player, bool start_enabled) : Module(start_enable
 	HPunch.bodyColliderFrame.push_back({ 60, 30, 25, 75 });
 	HPunch.armColliderFrame.push_back({ 60, 40, 20, 20 });
 	HPunch.legColliderFrame.push_back({ 70, 70, 20, 35 });
-	HPunch.speed = 0.5f;
+	HPunch.speed = 0.8f;
 
 	// L-M Kick Animation
 	LMKick.frames.push_back({ 2, 385, 70, 108 });
@@ -417,7 +445,7 @@ ModulePlayer::ModulePlayer(int player, bool start_enabled) : Module(start_enable
 	LMKick.bodyColliderFrame.push_back({ 50, 35, 30, 70 });
 	LMKick.armColliderFrame.push_back({ 65, 50, 20, 20 });
 	LMKick.legColliderFrame.push_back({ 75, 70, 20, 30 });
-	LMKick.speed = 0.6f;
+	LMKick.speed = 0.8f;
 
 	// High Kick Animation
 	HKick.frames.push_back({ 240, 385, 64, 108 });
@@ -444,7 +472,7 @@ ModulePlayer::ModulePlayer(int player, bool start_enabled) : Module(start_enable
 	HKick.bodyColliderFrame.push_back({ 50, 55, 40, 50 });
 	HKick.armColliderFrame.push_back({ 50, 55, 5, 5 });
 	HKick.legColliderFrame.push_back({ 50, 55, 5, 5 });
-	HKick.speed = 0.15f;
+	HKick.speed = 0.18f;
 
 	// Forward Low Punch Animation
 	FLPunch.frames.push_back({ 2, 248, 80, 120 });
@@ -609,7 +637,7 @@ ModulePlayer::ModulePlayer(int player, bool start_enabled) : Module(start_enable
 	CHKick.bodyColliderFrame.push_back({ 55, 45, 30, 60 });
 	CHKick.armColliderFrame.push_back({ 55, 45, 5, 5 });
 	CHKick.legColliderFrame.push_back({ 70, 85, 30, 20 });
-	CHKick.speed = 0.1f;
+	CHKick.speed = 0.2f;
 
 	// Jump Punch Animation
 	JPunch.frames.push_back({ 0, 605, 56, 90 });
@@ -777,7 +805,7 @@ ModulePlayer::ModulePlayer(int player, bool start_enabled) : Module(start_enable
 	// Hit Animation
 	Hit.frames.push_back({ 4, 1155, 64, 108 });
 	Hit.frames.push_back({ 71, 1155, 71, 108 });
-	Hit.speed = 0.12f;
+	Hit.speed = 0.15f;
 	Hit.colisionable = false;
 
 	// Head Hit Animation
@@ -1033,20 +1061,25 @@ update_status ModulePlayer::Update()
 						}
 					}
 
-					if ((position.x - 1 > 65) && (abs((position.x - enemy->position.x - 40)*SCREEN_SIZE) < App->renderer->camera.w) && (move == &walk)) {
-						if (flip == SDL_FLIP_HORIZONTAL){
-							if (position.x - 15 > enemy->position.x + 15){
-								--position.x;
+					if ((position.x - 1 > 65) && (abs((position.x - enemy->position.x - 40)*SCREEN_SIZE) < App->renderer->camera.w) && (move == &walk)) 
+					{
+						if (flip == SDL_FLIP_HORIZONTAL)
+						{
+							if (position.x - 15 > enemy->position.x + 15)
+							{
+								position.x -= 2;
 							}
 						}
 						else{
-							--position.x;
+							position.x -= 2;
 						}
 					}
 				}
-				else{
+				else
+				{
 					counterBack = 0;
-					if (App->input->GetKey(down) == KEY_REPEAT){
+					if (App->input->GetKey(down) == KEY_REPEAT)
+					{
 						punchAttacks = 0;
 
 						if (App->input->GetKey(lowPunch) == KEY_DOWN){
@@ -1141,11 +1174,11 @@ update_status ModulePlayer::Update()
 								if ((position.x + 1 < 480) && (abs((position.x - enemy->position.x + 50)*SCREEN_SIZE) < App->renderer->camera.w) && (move == &walk)) {
 									if (flip == SDL_FLIP_NONE){
 										if (position.x + 15 < enemy->position.x - 15){
-											++position.x;
+											position.x += 2;
 										}
 									}
 									else{
-										++position.x;
+										position.x += 2;
 									}
 								}
 							}
@@ -1308,11 +1341,11 @@ update_status ModulePlayer::Update()
 			if (jumpMove.x != 646){
 				// control jump (up and down)
 				if ((position.y > 10) && (endJump == false)){
-					position.y -= 4;
+					position.y -= 6;
 				}
 				else{
 					endJump = true;
-					position.y += 4;
+					position.y += 6;
 				}
 
 				// control jump (left and right)
