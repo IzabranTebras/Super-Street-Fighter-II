@@ -1,4 +1,4 @@
-﻿Build started 21/03/2017 23:12:07.
+﻿Build started 21/03/2017 23:25:06.
      1>Project "C:\Users\Cristian\Documents\GitHub\Super-Street-Fighter-II\SDL Game.vcxproj" on node 2 (Build target(s)).
      1>C:\Program Files (x86)\MSBuild\Microsoft.Cpp\v4.0\V120\Microsoft.CppBuild.targets(364,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
      1>ClCompile:
@@ -26,4 +26,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:02.94
+Time Elapsed 00:00:03.12

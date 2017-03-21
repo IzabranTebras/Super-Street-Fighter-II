@@ -124,10 +124,6 @@ ModulePlayer::ModulePlayer(int player, bool start_enabled) : Module(start_enable
 	jump.bodyColliderFrame.push_back({ 50, 55, 30, 50 });
 	jump.armColliderFrame.push_back({ 65, 50, 20, 20 });
 	jump.legColliderFrame.push_back({ 50, 70, 20, 20 });
-	jump.frames.push_back({ 646, 10, 68, 108 });
-	jump.bodyColliderFrame.push_back({ 40, 10, 30, 95 });
-	jump.armColliderFrame.push_back({ 70, 15, 10, 50 });
-	jump.legColliderFrame.push_back({ 50, 70, 20, 20 });
 	jump.frames.push_back({ 771, 12, 54, 108 });
 	jump.bodyColliderFrame.push_back({ 40, 10, 30, 95 });
 	jump.armColliderFrame.push_back({ 70, 15, 10, 50 });
@@ -1082,13 +1078,13 @@ update_status ModulePlayer::Update()
 					move->current_frame = 0;
 					if (App->input->GetKey(right) == KEY_REPEAT)
 					{
-						jumpDirection = 1;
+						jumpDirection = 3;
 					}
 					else
 					{
 						if (App->input->GetKey(left) == KEY_REPEAT)
 						{
-							jumpDirection = -1;
+							jumpDirection = -3;
 						}
 					}
 				}
