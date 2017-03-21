@@ -964,7 +964,8 @@ update_status ModulePlayer::Update()
 	if (clock() - time < 4000)
 	{
 		texture = idle.GetCurrentFrame(loopAnim, body, arm, leg);
-		if (position.x < enemy->position.x){
+		if (position.x < enemy->position.x)
+		{
 			flip = SDL_FLIP_NONE;
 		}
 		else
@@ -981,274 +982,338 @@ update_status ModulePlayer::Update()
 			jumpDirection = 0;
 			block = false;
 			
-			if (App->input->GetKey(up) == KEY_DOWN){
-				damage = NONE;
-				punchAttacks = 0;
-				typeAnim = JUMPING;
-				loopAnim = false;
-				endJump = false;
-				move = &jump;
-				move->current_frame = 0;
-				if (App->input->GetKey(right) == KEY_REPEAT){
-					jumpDirection = 1;
+			if (App->input->GetKey(lowPunch) == KEY_DOWN)
+			{
+				if (punchAttacks > 2)
+				{
+					damage = HIGH_DAMAGE;
+					typeAnim = ELECTRIC;
+					move = &ElectricShock;
 				}
-				else{
-					if (App->input->GetKey(left) == KEY_REPEAT){
-						jumpDirection = -1;
+				else
+				{
+					damage = LOW_DAMAGE;
+					++punchAttacks;
+					typeAnim = SINGLE;
+					loopAnim = false;
+					move = &LPunch;
+				}
+			}
+			else
+			{
+				if (App->input->GetKey(mediumPunch) == KEY_DOWN)
+				{
+					if (punchAttacks == 3)
+					{
+						damage = HIGH_DAMAGE;
+						typeAnim = ELECTRIC;
+						move = &ElectricShock;
+					}
+					else
+					{
+						damage = MEDIUM_DAMAGE;
+						++punchAttacks;
+						typeAnim = SINGLE;
+						loopAnim = false;
+						move = &MPunch;
+					}
+				}
+				else
+				{
+					if (counter > 20)
+					{		//change to timer
+						punchAttacks = 0;
+						counter = 0;
+					}
+					++counter;
+					if (App->input->GetKey(highPunch) == KEY_DOWN)
+					{
+						damage = MEDIUM_DAMAGE;
+						typeAnim = SINGLE;
+						loopAnim = false;
+						move = &HPunch;
+					}
+					else
+					{
+						if ((App->input->GetKey(lowKick) == KEY_DOWN) || (App->input->GetKey(mediumKick) == KEY_DOWN)){
+							damage = LOW_DAMAGE;
+							typeAnim = SINGLE;
+							loopAnim = false;
+							move = &LMKick;
+						}
+						else
+						{
+							if (App->input->GetKey(highKick) == KEY_DOWN)
+							{
+								damage = HIGH_DAMAGE;
+								typeAnim = SINGLE;
+								loopAnim = false;
+								move = &HKick;
+							}
+							else
+							{
+								if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+								{
+									damage = NONE;
+									typeAnim = PAUSE;
+								}
+								else
+								{
+									damage = NONE;
+									move = &idle;
+								}
+							}
+						}
 					}
 				}
 			}
-			else{
-				if (App->input->GetKey(left) == KEY_REPEAT){
-					punchAttacks = 0;
-					if (abs(position.x - enemy->position.x) <= 20){
-						if ((App->input->GetKey(right) == KEY_DOWN) && ((App->input->GetKey(lowPunch) == KEY_DOWN) || (App->input->GetKey(mediumPunch) == KEY_DOWN) || (App->input->GetKey(highPunch) == KEY_DOWN)) && counterBack > 10){
-							loopAnim = false;
-							typeAnim = SINGLE;
-							move = &RollAttack;
-							counterBack = 0;
-							damage = HIGH_DAMAGE;
-						}
-						if (App->input->GetKey(lowPunch) == KEY_DOWN){
-							damage = LOW_DAMAGE;
-							loopAnim = false;
-							typeAnim = SINGLE;
-							move = &FLPunch;
-							counterBack = 0;
-						}
-						else{
-							if (App->input->GetKey(mediumPunch) == KEY_DOWN){
-								damage = MEDIUM_DAMAGE;
-								loopAnim = false;
-								typeAnim = SINGLE;
-								move = &FMPunch;
-								counterBack = 0;
-							}
-							else{
-								if ((App->input->GetKey(lowKick) == KEY_DOWN) || (App->input->GetKey(mediumKick) == KEY_DOWN)){
-									damage = LOW_DAMAGE;
-									loopAnim = false;
-									typeAnim = SINGLE;
-									move = &FLMKick;
-									counterBack = 0;
-								}
-								else{
-									damage = NONE;
-									counterBack++;
-									move = &walk;
-									if (flip == SDL_FLIP_NONE){
-										block = true;
-									}
-								}
-							}
-						}
-					}
-					else{
-						if ((App->input->GetKey(right) == KEY_DOWN) && ((App->input->GetKey(lowPunch) == KEY_DOWN) || (App->input->GetKey(mediumPunch) == KEY_DOWN) || (App->input->GetKey(highPunch) == KEY_DOWN)) && counterBack > 10){
-							loopAnim = false;
-							typeAnim = SINGLE;
-							move = &RollAttack;
-							counterBack = 0;
-							damage = HIGH_DAMAGE;
-						}
-						else{
-							damage = NONE;
-							counterBack++;
-							move = &walk;
-							if (flip == SDL_FLIP_NONE){
-								block = true;
-							}
-						}
-					}
 
-					if ((position.x - 1 > 65) && (abs((position.x - enemy->position.x - 40)*SCREEN_SIZE) < App->renderer->camera.w) && (move == &walk)) 
+			// We ensure first that is not attacking. Doing this the player can attack while is walking
+			if (typeAnim != SINGLE)
+			{
+				if (App->input->GetKey(up) == KEY_DOWN)
+				{
+					damage = NONE;
+					punchAttacks = 0;
+					typeAnim = JUMPING;
+					loopAnim = false;
+					endJump = false;
+					move = &jump;
+					move->current_frame = 0;
+					if (App->input->GetKey(right) == KEY_REPEAT)
 					{
-						if (flip == SDL_FLIP_HORIZONTAL)
+						jumpDirection = 1;
+					}
+					else
+					{
+						if (App->input->GetKey(left) == KEY_REPEAT)
 						{
-							if (position.x - 15 > enemy->position.x + 15)
-							{
-								position.x -= 2;
-							}
-						}
-						else{
-							position.x -= 2;
+							jumpDirection = -1;
 						}
 					}
 				}
 				else
 				{
-					counterBack = 0;
-					if (App->input->GetKey(down) == KEY_REPEAT)
+					if (App->input->GetKey(left) == KEY_REPEAT)
 					{
 						punchAttacks = 0;
-
-						if (App->input->GetKey(lowPunch) == KEY_DOWN){
-							damage = LOW_DAMAGE;
-							move = &CLPunch;
-							typeAnim = SINGLE;
-							loopAnim = false;
-						}
-						else{
-							if ((App->input->GetKey(mediumPunch) == KEY_DOWN) || (App->input->GetKey(highPunch) == KEY_DOWN)){
-								damage = MEDIUM_DAMAGE;
-								move = &CMHPunch;
-								typeAnim = SINGLE;
+						if (abs(position.x - enemy->position.x) <= 20)
+						{
+							if ((App->input->GetKey(right) == KEY_DOWN) && ((App->input->GetKey(lowPunch) == KEY_DOWN) || (App->input->GetKey(mediumPunch) == KEY_DOWN) || (App->input->GetKey(highPunch) == KEY_DOWN)) && counterBack > 10)
+							{
 								loopAnim = false;
+								typeAnim = SINGLE;
+								move = &RollAttack;
+								counterBack = 0;
+								damage = HIGH_DAMAGE;
 							}
-							else{
-								if ((App->input->GetKey(lowKick) == KEY_DOWN) || (App->input->GetKey(mediumKick) == KEY_DOWN)){
-									damage = LOW_DAMAGE;
-									move = &CLMKick;
-									typeAnim = SINGLE;
+							if (App->input->GetKey(lowPunch) == KEY_DOWN)
+							{
+								damage = LOW_DAMAGE;
+								loopAnim = false;
+								typeAnim = SINGLE;
+								move = &FLPunch;
+								counterBack = 0;
+							}
+							else
+							{
+								if (App->input->GetKey(mediumPunch) == KEY_DOWN)
+								{
+									damage = MEDIUM_DAMAGE;
 									loopAnim = false;
+									typeAnim = SINGLE;
+									move = &FMPunch;
+									counterBack = 0;
 								}
-								else{
-									if (App->input->GetKey(highKick) == KEY_DOWN){
-										damage = MEDIUM_DAMAGE;
-										move = &CHKick;
-										typeAnim = SINGLE;
+								else
+								{
+									if ((App->input->GetKey(lowKick) == KEY_DOWN) || (App->input->GetKey(mediumKick) == KEY_DOWN))
+									{
+										damage = LOW_DAMAGE;
 										loopAnim = false;
+										typeAnim = SINGLE;
+										move = &FLMKick;
+										counterBack = 0;
 									}
-									else{
+									else
+									{
 										damage = NONE;
-										move = &crouchDown;
+										counterBack++;
+										move = &walk;
+										if (flip == SDL_FLIP_NONE)
+										{
+											block = true;
+										}
 									}
 								}
+							}
+						}
+						else
+						{
+							if ((App->input->GetKey(right) == KEY_DOWN) && ((App->input->GetKey(lowPunch) == KEY_DOWN) || (App->input->GetKey(mediumPunch) == KEY_DOWN) || (App->input->GetKey(highPunch) == KEY_DOWN)) && counterBack > 10)
+							{
+								loopAnim = false;
+								typeAnim = SINGLE;
+								move = &RollAttack;
+								counterBack = 0;
+								damage = HIGH_DAMAGE;
+							}
+							else
+							{
+								damage = NONE;
+								counterBack++;
+								move = &walk;
+								if (flip == SDL_FLIP_NONE)
+								{
+									block = true;
+								}
+							}
+						}
+
+						if ((position.x - 1 > 65) && (abs((position.x - enemy->position.x - 40)*SCREEN_SIZE) < App->renderer->camera.w) && (move == &walk))
+						{
+							if (flip == SDL_FLIP_HORIZONTAL)
+							{
+								if (position.x - 15 > enemy->position.x + 15)
+								{
+									position.x -= 2;
+								}
+							}
+							else
+							{
+								position.x -= 2;
 							}
 						}
 					}
-					else{
-						if (App->input->GetKey(down) == KEY_UP){
-							damage = NONE;
-							typeAnim = SINGLE;
-							loopAnim = false;
-							move = &crouchUp;
-						}
-						else{
-							if (App->input->GetKey(right) == KEY_REPEAT){
-								punchAttacks = 0;
-								if (abs(position.x - enemy->position.x) <= 20){
-									if (App->input->GetKey(mediumPunch) == KEY_DOWN){
-										loopAnim = false;
-										typeAnim = SINGLE;
-										move = &FMPunch;
-										counterBack = 0;
-										damage = MEDIUM_DAMAGE;
-									}
-									else{
-										if ((App->input->GetKey(lowKick) == KEY_DOWN) || (App->input->GetKey(mediumKick) == KEY_DOWN)){
-											loopAnim = false;
-											typeAnim = SINGLE;
-											move = &FLMKick;
-											counterBack = 0;
-											damage = LOW_DAMAGE;
-										}
-										else{
-											if (App->input->GetKey(lowPunch) == KEY_DOWN){
-												loopAnim = false;
-												typeAnim = SINGLE;
-												move = &FLPunch;
-												counterBack = 0;
-												damage = LOW_DAMAGE;
-											}
-											else{
-												damage = NONE;
-												move = &walk;
-												counterBack = 0;
-												if (flip != SDL_FLIP_NONE){
-													block = true;
-												}
-											}
-										}
-									}
-								}
-								else{
-									damage = NONE;
-									move = &walk;
-									counterBack = 0;
-									if (flip != SDL_FLIP_NONE){
-										block = true;
-									}
-								}
+					else
+					{
+						counterBack = 0;
+						if (App->input->GetKey(down) == KEY_REPEAT)
+						{
+							punchAttacks = 0;
 
-								if ((position.x + 1 < 480) && (abs((position.x - enemy->position.x + 50)*SCREEN_SIZE) < App->renderer->camera.w) && (move == &walk)) {
-									if (flip == SDL_FLIP_NONE){
-										if (position.x + 15 < enemy->position.x - 15){
-											position.x += 2;
-										}
+							if (App->input->GetKey(lowPunch) == KEY_DOWN)
+							{
+								damage = LOW_DAMAGE;
+								move = &CLPunch;
+								typeAnim = SINGLE;
+								loopAnim = false;
+							}
+							else
+							{
+								if ((App->input->GetKey(mediumPunch) == KEY_DOWN) || (App->input->GetKey(highPunch) == KEY_DOWN))
+								{
+									damage = MEDIUM_DAMAGE;
+									move = &CMHPunch;
+									typeAnim = SINGLE;
+									loopAnim = false;
+								}
+								else
+								{
+									if ((App->input->GetKey(lowKick) == KEY_DOWN) || (App->input->GetKey(mediumKick) == KEY_DOWN))
+									{
+										damage = LOW_DAMAGE;
+										move = &CLMKick;
+										typeAnim = SINGLE;
+										loopAnim = false;
 									}
-									else{
-										position.x += 2;
+									else
+									{
+										if (App->input->GetKey(highKick) == KEY_DOWN)
+										{
+											damage = MEDIUM_DAMAGE;
+											move = &CHKick;
+											typeAnim = SINGLE;
+											loopAnim = false;
+										}
+										else
+										{
+											damage = NONE;
+											move = &crouchDown;
+										}
 									}
 								}
 							}
+						}
+						else
+						{
+							if (App->input->GetKey(down) == KEY_UP)
+							{
+								damage = NONE;
+								typeAnim = SINGLE;
+								loopAnim = false;
+								move = &crouchUp;
+							}
 							else{
-								if (App->input->GetKey(lowPunch) == KEY_DOWN){
-									if (punchAttacks > 2){
-										damage = HIGH_DAMAGE;
-										typeAnim = ELECTRIC;
-										move = &ElectricShock;
-									}
-									else{
-										damage = LOW_DAMAGE;
-										++punchAttacks;
-										typeAnim = SINGLE;
-										loopAnim = false;
-										move = &LPunch;
-									}
-								}
-								else{
-									if (App->input->GetKey(mediumPunch) == KEY_DOWN){
-										if (punchAttacks == 3){
-											damage = HIGH_DAMAGE;
-											typeAnim = ELECTRIC;
-											move = &ElectricShock;
-										}
-										else{
-											damage = MEDIUM_DAMAGE;
-											++punchAttacks;
-											typeAnim = SINGLE;
+								if (App->input->GetKey(right) == KEY_REPEAT)
+								{
+									punchAttacks = 0;
+									if (abs(position.x - enemy->position.x) <= 20)
+									{
+										if (App->input->GetKey(mediumPunch) == KEY_DOWN)
+										{
 											loopAnim = false;
-											move = &MPunch;
-										}
-									}
-									else{
-										if (counter > 20){		//change to timer
-											punchAttacks = 0;
-											counter = 0;
-										}
-										++counter;
-										if (App->input->GetKey(highPunch) == KEY_DOWN){
-											damage = MEDIUM_DAMAGE;
 											typeAnim = SINGLE;
-											loopAnim = false;
-											move = &HPunch;
+											move = &FMPunch;
+											counterBack = 0;
+											damage = MEDIUM_DAMAGE;
 										}
-										else{
-											if ((App->input->GetKey(lowKick) == KEY_DOWN) || (App->input->GetKey(mediumKick) == KEY_DOWN)){
-												damage = LOW_DAMAGE;
-												typeAnim = SINGLE;
+										else
+										{
+											if ((App->input->GetKey(lowKick) == KEY_DOWN) || (App->input->GetKey(mediumKick) == KEY_DOWN))
+											{
 												loopAnim = false;
-												move = &LMKick;
+												typeAnim = SINGLE;
+												move = &FLMKick;
+												counterBack = 0;
+												damage = LOW_DAMAGE;
 											}
-											else{
-												if (App->input->GetKey(highKick) == KEY_DOWN){
-													damage = HIGH_DAMAGE;
-													typeAnim = SINGLE;
+											else
+											{
+												if (App->input->GetKey(lowPunch) == KEY_DOWN)
+												{
 													loopAnim = false;
-													move = &HKick;
+													typeAnim = SINGLE;
+													move = &FLPunch;
+													counterBack = 0;
+													damage = LOW_DAMAGE;
 												}
-												else{
-													if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN){
-														damage = NONE;
-														typeAnim = PAUSE;
-													}
-													else{
-														damage = NONE;
-														move = &idle;
+												else
+												{
+													damage = NONE;
+													move = &walk;
+													counterBack = 0;
+													if (flip != SDL_FLIP_NONE)
+													{
+														block = true;
 													}
 												}
 											}
+										}
+									}
+									else
+									{
+										damage = NONE;
+										move = &walk;
+										counterBack = 0;
+										if (flip != SDL_FLIP_NONE)
+										{
+											block = true;
+										}
+									}
+
+									if ((position.x + 1 < 480) && (abs((position.x - enemy->position.x + 50)*SCREEN_SIZE) < App->renderer->camera.w) && (move == &walk))
+									{
+										if (flip == SDL_FLIP_NONE)
+										{
+											if (position.x + 15 < enemy->position.x - 15)
+											{
+												position.x += 2;
+											}
+										}
+										else
+										{
+											position.x += 2;
 										}
 									}
 								}
@@ -1261,44 +1326,57 @@ update_status ModulePlayer::Update()
 
 
 		case SINGLE:
-			if ((move == &RollAttack) && (texture.x != 843) && (texture.x != 923)){
-				if (flip == SDL_FLIP_NONE){
+			if ((move == &RollAttack) && (texture.x != 843) && (texture.x != 923))
+			{
+				if (flip == SDL_FLIP_NONE)
+				{
 					position.x = position.x + 2;
 				}
-				else{
+				else
+				{
 					position.x = position.x - 2;
 				}
 			}
 
-			if (move == &Recover){
-				if (flip == SDL_FLIP_NONE){
+			if (move == &Recover)
+			{
+				if (flip == SDL_FLIP_NONE)
+				{
 					position.x = position.x - 2;
 				}
-				else{
+				else
+				{
 					position.x = position.x + 2;
 				}
 			}
 
-			if (move == &KO){
-				if (texture.x != 331){
+			if (move == &KO)
+			{
+				if (texture.x != 331)
+				{
 					texture = move->GetCurrentFrame(loopAnim, body, arm, leg);
 				}
 
-				if (flip == SDL_FLIP_NONE){
-					if (texture.x != 331){
+				if (flip == SDL_FLIP_NONE)
+				{
+					if (texture.x != 331)
+					{
 						position.x = position.x - 3;
 					}
 					App->renderer->Blit(graphics, position.x, position.y, &texture, flip);
 				}
-				else{
-					if (texture.x != 331){
+				else
+				{
+					if (texture.x != 331)
+					{
 						position.x = position.x + 3;
 					}
 					App->renderer->Blit(graphics, position.x - texture.w + 75, position.y, &texture, flip);
 				}
 			}
 
-			if ((loopAnim == true) && (move != &KO) && (move != &Victory1)){
+			if ((loopAnim == true) && (move != &KO) && (move != &Victory1))
+			{
 				typeAnim = LOOP;
 			}
 			break;
@@ -1307,28 +1385,36 @@ update_status ModulePlayer::Update()
 		case JUMPING:
 			jumpMove = move->GetCurrentFrame(loopAnim, body, arm, leg);
 
-			if (jumpAttack == false){
-				if ((App->input->GetKey(lowPunch) == KEY_DOWN) || (App->input->GetKey(mediumPunch) == KEY_DOWN) || (App->input->GetKey(highPunch) == KEY_DOWN)){
+			if (jumpAttack == false)
+			{
+				if ((App->input->GetKey(lowPunch) == KEY_DOWN) || (App->input->GetKey(mediumPunch) == KEY_DOWN) || (App->input->GetKey(highPunch) == KEY_DOWN))
+				{
 					jumpAttack = true;
 					loopAnim = false;
-					if ((abs(position.x - enemy->position.x) <= 20) && (abs(position.y - enemy->position.y) <= 80)){
+					if ((abs(position.x - enemy->position.x) <= 20) && (abs(position.y - enemy->position.y) <= 80))
+					{
 						damage = HIGH_DAMAGE;
 						move = &FJPunch;
 					}
-					else{
+					else
+					{
 						damage = LOW_DAMAGE;
 						move = &JPunch;
 					}
 				}
-				else{
-					if ((App->input->GetKey(lowKick) == KEY_DOWN) || (App->input->GetKey(mediumKick))){
+				else
+				{
+					if ((App->input->GetKey(lowKick) == KEY_DOWN) || (App->input->GetKey(mediumKick)))
+					{
 						damage = MEDIUM_DAMAGE;
 						jumpAttack = true;
 						loopAnim = false;
 						move = &JLMKick;
 					}
-					else{
-						if (App->input->GetKey(highKick) == KEY_DOWN){
+					else
+					{
+						if (App->input->GetKey(highKick) == KEY_DOWN)
+						{
 							damage = HIGH_DAMAGE;
 							jumpAttack = true;
 							loopAnim = false;
@@ -1338,18 +1424,22 @@ update_status ModulePlayer::Update()
 				}
 			}
 
-			if (jumpMove.x != 646){
+			if (jumpMove.x != 646)
+			{
 				// control jump (up and down)
-				if ((position.y > 10) && (endJump == false)){
+				if ((position.y > 10) && (endJump == false))
+				{
 					position.y -= 6;
 				}
-				else{
+				else
+				{
 					endJump = true;
 					position.y += 6;
 				}
 
 				// control jump (left and right)
-				if ((jumpDirection != 0) && ((position.x + 1 < 480) && (position.x - 1 > 65)) && (abs((position.x - enemy->position.x - 40)*SCREEN_SIZE) < App->renderer->camera.w) && (abs((position.x - enemy->position.x + 50)*SCREEN_SIZE) < App->renderer->camera.w)) {
+				if ((jumpDirection != 0) && ((position.x + 1 < 480) && (position.x - 1 > 65)) && (abs((position.x - enemy->position.x - 40)*SCREEN_SIZE) < App->renderer->camera.w) && (abs((position.x - enemy->position.x + 50)*SCREEN_SIZE) < App->renderer->camera.w)) 
+				{
 					position.x = position.x + jumpDirection;
 				}
 			}
@@ -1370,17 +1460,21 @@ update_status ModulePlayer::Update()
 
 			//render the jump and shadow
 			texture = move->GetCurrentFrame(loopAnim, body, arm, leg);
-			if (position.x < enemy->position.x){
+			if (position.x < enemy->position.x)
+			{
 				flip = SDL_FLIP_NONE;
 				App->renderer->Blit(graphics, position.x, position.y, &texture, flip);
-				if (jumpMove.x != 646){
+				if (jumpMove.x != 646)
+				{
 					App->renderer->Blit(graphics, position.x, 175, &shadow, flip);
 				}
 			}
-			else{
+			else
+			{
 				flip = SDL_FLIP_HORIZONTAL;
 				App->renderer->Blit(graphics, position.x - texture.w + 75, position.y, &texture, flip);
-				if (jumpMove.x != 646){
+				if (jumpMove.x != 646)
+				{
 					App->renderer->Blit(graphics, position.x - texture.w + 75, 175, &shadow, flip);
 				}
 			}
@@ -1389,8 +1483,10 @@ update_status ModulePlayer::Update()
 
 
 		case ELECTRIC:
-			if (counter > 50){			// change to timer
-				if ((App->input->GetKey(lowPunch) != KEY_DOWN) && (App->input->GetKey(mediumPunch) != KEY_DOWN)){
+			if (counter > 50)
+			{			// change to timer
+				if ((App->input->GetKey(lowPunch) != KEY_DOWN) && (App->input->GetKey(mediumPunch) != KEY_DOWN))
+				{
 					typeAnim = LOOP;
 				}
 				counter = 0;
@@ -1404,11 +1500,13 @@ update_status ModulePlayer::Update()
 		{
 			texture = move->GetCurrentFrame(loopAnim, body, arm, leg);
 
-			if (position.x < enemy->position.x){
+			if (position.x < enemy->position.x)
+			{
 				flip = SDL_FLIP_NONE;
 				App->renderer->Blit(graphics, position.x, position.y, &texture, flip);
 			}
-			else{
+			else
+			{
 				flip = SDL_FLIP_HORIZONTAL;
 				App->renderer->Blit(graphics, position.x - texture.w + 71, position.y, &texture, flip);
 			}
@@ -1453,19 +1551,28 @@ update_status ModulePlayer::Update()
 	return UPDATE_CONTINUE;
 }
 
-void ModulePlayer::OnCollision(const Collider* colliderA, const Collider* colliderB){
-	if (colliderB->type == enemyCollider){
-		if (damage == NONE){
-			if (enemy->damage != NONE){
-				if (block == false){
-					if (move == &jump){
+void ModulePlayer::OnCollision(const Collider* colliderA, const Collider* colliderB)
+{
+	if (colliderB->type == enemyCollider)
+	{
+		if (damage == NONE)
+		{
+			if (enemy->damage != NONE)
+			{
+				if (block == false)
+				{
+					if (move == &jump)
+					{
 						position.y = 110;
 					}
-					if (enemy->damage == LOW_DAMAGE){
-						if ((enemy->move == &CLPunch) || (enemy->move == &CLMKick)){
+					if (enemy->damage == LOW_DAMAGE)
+					{
+						if ((enemy->move == &CLPunch) || (enemy->move == &CLMKick))
+						{
 							life = life - 12;
 						}
-						else{
+						else
+						{
 							life = life - 14;
 						}
 						App->audio->PlayFx(fxKick);
@@ -1474,19 +1581,25 @@ void ModulePlayer::OnCollision(const Collider* colliderA, const Collider* collid
 						move = &Hit;
 					}
 					else{
-						if (enemy->damage == MEDIUM_DAMAGE){
-							if (enemy->move == &FMPunch){
+						if (enemy->damage == MEDIUM_DAMAGE)
+						{
+							if (enemy->move == &FMPunch)
+							{
 								life = life - 18;
 							}
-							else{
-								if (enemy->move == &MPunch){
+							else
+							{
+								if (enemy->move == &MPunch)
+								{
 									life = life - 20;
 								}
 								else{
-									if (enemy->move == &JLMKick){
+									if (enemy->move == &JLMKick)
+									{
 										life = life - 24;
 									}
-									else{
+									else
+									{
 										life = life - 26;
 									}
 								}
@@ -1496,12 +1609,16 @@ void ModulePlayer::OnCollision(const Collider* colliderA, const Collider* collid
 							loopAnim = false;
 							move = &Hit;
 						}
-						else{
-							if (enemy->damage == HIGH_DAMAGE){
-								if ((enemy->move == &FJPunch) || (enemy->move == &JHKick)){
+						else
+						{
+							if (enemy->damage == HIGH_DAMAGE)
+							{
+								if ((enemy->move == &FJPunch) || (enemy->move == &JHKick))
+								{
 									life = life - 30;
 								}
-								else{
+								else
+								{
 									life = life - 28;
 								}
 								App->audio->PlayFx(fxPunch);
@@ -1512,7 +1629,8 @@ void ModulePlayer::OnCollision(const Collider* colliderA, const Collider* collid
 						}
 					}
 				}
-				else{
+				else
+				{
 					typeAnim = SINGLE;
 					loopAnim = false;
 					move = &Block;
@@ -1520,15 +1638,18 @@ void ModulePlayer::OnCollision(const Collider* colliderA, const Collider* collid
 				enemy->damage = NONE;
 			}
 		}
-		else{
-			if (move == &RollAttack){
+		else
+		{
+			if (move == &RollAttack)
+			{
 				typeAnim = SINGLE;
 				loopAnim = false;
 				move = &Recover;
 			}
 		}
 
-		if ((life < 1) && (move != &KO)){
+		if ((life < 1) && (move != &KO))
+		{
 			CombatEnd(false);
 			enemy->CombatEnd(false);
 			App->audio->PlayFx(fxLose);
@@ -1536,27 +1657,33 @@ void ModulePlayer::OnCollision(const Collider* colliderA, const Collider* collid
 	}
 }
 
-void ModulePlayer::CombatEnd(const bool time){
+void ModulePlayer::CombatEnd(const bool time)
+{
 	bodyCollider->SetCollider(body, 0, 0);
 	armCollider->SetCollider(arm, 0, 0);
 	legCollider->SetCollider(leg, 0, 0);
-	if (time == true){
+	if (time == true)
+	{
 		typeAnim = SINGLE;
 		loopAnim = false;
-		if (life > enemy->life){
+		if (life > enemy->life)
+		{
 			move = &Victory1;
 		}
-		else{
+		else
+		{
 			move = &TimeOver;
 		}
 	}
 	else{
-		if (life > 0){
+		if (life > 0)
+		{
 			typeAnim = SINGLE;
 			loopAnim = false;
 			move = &Victory1;
 		}
-		else{
+		else
+		{
 			typeAnim = SINGLE;
 			loopAnim = false;
 			move = &KO;
