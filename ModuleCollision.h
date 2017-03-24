@@ -25,6 +25,7 @@ struct Collider
 	bool arm;
 	bool leg;
 
+	// Properties of the colliders
 	Collider(SDL_Rect rectangle, COLLIDER_TYPE type, Module* callback = NULL, bool body = false, bool arm = false, bool leg = false) :
 		rect(rectangle),
 		type(type),

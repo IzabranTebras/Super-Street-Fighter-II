@@ -10,6 +10,7 @@ ModuleCollision::ModuleCollision() : Module()
 {
 	debug = false;
 
+	// Matrix of possible collisions between objects in scene
 	matrix[COLLIDER_PLAYER1][COLLIDER_PLAYER1] = false;
 	matrix[COLLIDER_PLAYER1][COLLIDER_PLAYER2] = true;
 	matrix[COLLIDER_PLAYER1][COLLIDER_PLAYER1_SHOT] = false;

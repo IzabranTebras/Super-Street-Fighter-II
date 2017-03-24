@@ -59,7 +59,7 @@ ModulePlayer::ModulePlayer(int player, bool start_enabled) : Module(start_enable
 	pos = line.find("> ");
 	highKick = atoi(line.substr(pos + 1).c_str());
 
-	// add animation frames and box colliders to once frame
+	// add sprites and box colliders to frames
 	// idle animation
 	idle.frames.push_back({ 0, 10, 71, 108 });
 	idle.bodyColliderFrame.push_back({ 50, 30, 30, 75 });
@@ -903,6 +903,7 @@ bool ModulePlayer::Start()
 	fxKick = App->audio->LoadFx("short_kick.wav");
 	fxLose = App->audio->LoadFx("39H.wav");
 
+	// Setting positions and colliders of players
 	if (numPlayer == 1) 
 	{
 		position.x = 180;
@@ -925,7 +926,7 @@ bool ModulePlayer::Start()
 	}
 
 	life = 262;
-	typeAnim = LOOP;
+	typeAnim = LOOP;		// Types of animation, can be a loop animation, single or jump. This is to avoid attack when player is already attacking
 	time = clock();
 	return true;
 }
@@ -957,6 +958,8 @@ update_status ModulePlayer::Update()
 	Start - Pause
 	Select - Unused
 	*/
+
+	// Timer to not move players in the titles 
 	if (clock() - time < 4000)
 	{
 		texture = idle.GetCurrentFrame(loopAnim, body, arm, leg);
@@ -974,7 +977,7 @@ update_status ModulePlayer::Update()
 	{
 		switch (typeAnim)
 		{
-		case LOOP:
+		case LOOP:			// When the animation that is rendering is a loop animation then handle all the inputs
 			jumpDirection = 0;
 			block = false;
 			
@@ -1320,7 +1323,7 @@ update_status ModulePlayer::Update()
 			}
 			break;
 
-
+		// Management when player is attacking
 		case SINGLE:
 			if ((move == &RollAttack) && (texture.x != 843) && (texture.x != 923))
 			{
@@ -1377,7 +1380,7 @@ update_status ModulePlayer::Update()
 			}
 			break;
 
-
+		// Managment when player is jumping
 		case JUMPING:
 			jumpMove = move->GetCurrentFrame(loopAnim, body, arm, leg);
 
@@ -1477,7 +1480,7 @@ update_status ModulePlayer::Update()
 
 			break;
 
-
+		// Management when Blanka is doing his special electric attack
 		case ELECTRIC:
 			if (counter > 50)
 			{			// change to timer
